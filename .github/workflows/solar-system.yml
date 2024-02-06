@@ -17,19 +17,19 @@ jobs:
             # max-parallel: 1
             matrix:
                 os: [ubuntu-latest, macos-latest]
-                node-versions: [18, 19, 20]
+                node-version: [18, 19, 20]
                 exclude:
-                  - node-versions: 18
+                  - node-version: 18
                     os: macos-latest
         runs-on: ${{matrix.os}}
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v4
             
-            - name: Set Node JS Version - ${{matrix.node-versions}}
+            - name: Set Node JS Version - ${{matrix.node-version}}
               uses: actions/setup-node@v3
               with:
-                node-versions: ${{matrix.node-versions}}
+                node-version: ${{matrix.node-version}}
             
             - name: Install Dependencies
               run: npm install
