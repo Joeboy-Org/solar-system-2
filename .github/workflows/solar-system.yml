@@ -14,7 +14,7 @@ jobs:
     unit-testing:
         name: Unit Testing
         strategy:
-            max-parallel: 1
+            # max-parallel: 1
             matrix:
                 os: [ubuntu-latest, macos-latest]
                 node-versions: [18, 19, 20]
