@@ -172,6 +172,8 @@ jobs:
             - name: start minikube
               id: minikube
               uses: medyagh/setup-minikube@latest
+              with:
+               addons: metallb,ingress
           
             
             - name: Install kubectl CLI
