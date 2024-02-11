@@ -201,7 +201,7 @@ jobs:
               with:
                   tokenPrefix: '{'
                   tokenSuffix: '}'
-                  files: '["solar-system/kubernetes/development/*.yaml"]'
+                  files: '["kubernetes/development/*.yaml"]'
               env:
                   NAMESPACE: ${{ vars.NAMESPACE }}
                   REPLICAS: ${{ vars.REPLICAS }}
@@ -212,7 +212,7 @@ jobs:
               run: |
                pwd
                ls
-               cat solar-system/kubernetes/development/*.yaml
+               cat kubernetes/development/*.yaml
               
 
             
