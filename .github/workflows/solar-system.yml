@@ -190,7 +190,7 @@ jobs:
             - name: Fetch Kubernetes Cluster Details
               run: |
                 kubectl version --short
-                kubectl get svc -n metallb-system
+                minikube ip
                 minikube service -n ingress-nginx ingress-nginx-controller --url
                 kubectl -n ingress-nginx get services ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
                 echo -----------------------------------------------
