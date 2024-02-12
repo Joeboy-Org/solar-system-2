@@ -241,6 +241,7 @@ jobs:
             - name: Get all details in development namespace
               run: |
                 kubectl -n development get ing
+                curl -v solar-system-development.192.168.49.2.nip.io
 
               
 
