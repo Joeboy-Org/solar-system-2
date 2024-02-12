@@ -257,7 +257,7 @@ jobs:
         steps:
             - name: Test URL Output CURL AND JQ
               env:
-                URL: ${{needs.dev-deploy.outputs.APP_INGRESS_URL}}
+                URL: ${{needs.dev-deploy.outputs.}}
               run: |
                 echo $URL
                 echo "---------------------------------"
