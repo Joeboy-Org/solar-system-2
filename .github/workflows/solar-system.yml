@@ -162,6 +162,7 @@ jobs:
 
 
     dev-deploy:
+        if: contains(github.ref, 'feature/')
         name: Deploy App to Dev
         needs: docker
         environment: 
@@ -256,6 +257,7 @@ jobs:
                 curl -v solar-system-development.192.168.49.2.nip.io
 
     dev-integration-testing:
+        if: contains(github.ref, 'feature/')
         name: Dev Integration Testing
         continue-on-error: true
         needs: dev-deploy
@@ -270,8 +272,9 @@ jobs:
                 curl https://$URL/live -s -k | jq -r .status | grep -i live
 
     prod-deploy:
-        name: Deploy App to Dev
-        needs: dev-integration-testing
+        if: github.ref == 'ref/heads/main'
+        name: Deploy App to Prod
+        needs: docker
         environment: 
           name: production
           url: http://${{steps.set-ingress-host-address.outputs.APP_INGRESS_HOST}}
@@ -365,6 +368,7 @@ jobs:
 
     prod-integration-testing:
         name: Prod Integration Testing
+        if: github.ref == 'ref/heads/main'
         needs: prod-deploy
         runs-on: ubuntu-latest
         steps:
