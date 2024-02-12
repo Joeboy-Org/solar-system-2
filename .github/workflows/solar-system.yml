@@ -276,7 +276,7 @@ jobs:
                 echo completed
 
     prod-deploy:
-        if: github.ref == 'ref/heads/main'
+        if: github.ref == 'refs/heads/main'
         name: Deploy App to Prod
         needs: docker
         environment: 
