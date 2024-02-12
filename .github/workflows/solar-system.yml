@@ -251,9 +251,9 @@ jobs:
 
             - name: Get all details in development namespace
               run: |
-                kubectl -n development get ing
+                # kubectl -n development get ing
                 kubectl -n development get ing -o jsonpath='{.items[*].spec.rules[*].host}'
-                curl -v solar-system-development.192.168.49.2.nip.io
+                # curl -v solar-system-development.192.168.49.2.nip.io
 
     integration-testing:
         name: Dev Integration Testing
