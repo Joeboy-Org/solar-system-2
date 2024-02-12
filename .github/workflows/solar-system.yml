@@ -164,6 +164,8 @@ jobs:
     dev-deploy:
         name: Deploy App to Dev
         needs: docker
+        outputs:
+            APP_INGRESS_URL: ${{steps.set-ingress-host-address.outputs.APP_INGRESS_HOST}}
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repository
@@ -238,10 +240,28 @@ jobs:
               run: |
                 kubectl apply -f kubernetes/development
 
-            - name: Get all details in development namespace
+            - name: Set App Ingress Host URL
+              id: set-ingress-host-address
               run: |
-                kubectl -n development get ing
-                curl -v solar-system-development.192.168.49.2.nip.io
+                 echo "APP_INGRESS_HOST=$(kubectl -n ${{ vars.NAMESPACE}} get ingress -o jsonpath="{.items[0].spec.tls[0].hosts[0]}")" >> "$GITHUB_OUTPUT"
+
+            # - name: Get all details in development namespace
+            #   run: |
+            #     kubectl -n development get ing
+            #     curl -v solar-system-development.192.168.49.2.nip.io
+
+    integration-testing:
+        name: Dev Integration Testing
+        needs: dev-deploy
+        runs-on: ubuntu-latest
+        steps:
+            - name: Test URL Output CURL AND JQ
+              env:
+                URL: ${{needs.dev-deploy.outputs.APP_INGRESS_URL}}
+              run: |
+                echo $URL
+                echo "---------------------------------"
+                curl https://$URL/live -s -k | jq -r .status | grep -i live
 
               
 
