@@ -164,9 +164,9 @@ jobs:
     dev-deploy:
         name: Deploy App to Dev
         needs: docker
-        # environment: 
-        #   name: development
-        #   url: http://${{steps.set-ingress-host-address.outputs.APP_INGRESS_HOST}}
+        environment: 
+          name: development
+          url: http://${{steps.set-ingress-host-address.outputs.APP_INGRESS_HOST}}
         outputs:
             APP_INGRESS_URL: ${{steps.set-ingress-host-address.outputs.APP_INGRESS_HOST}}
         runs-on: ubuntu-latest
@@ -247,13 +247,13 @@ jobs:
             - name: Set App Ingress Host URL
               id: set-ingress-host-address
               run: |
-                 echo "APP_INGRESS_HOST=$(kubectl -n ${{ vars.NAMESPACE}} get ingress -o jsonpath="{.items[*].spec.rules[*].host}")" >> "$GITHUB_OUTPUT"
+                 echo "APP_INGRESS_HOST=$(kubectl -n ${{ vars.NAMESPACE}} get ingress -o jsonpath='{.items[*].spec.rules[*].host}')" >> "$GITHUB_OUTPUT"
 
-            - name: Get all details in development namespace
-              run: |
-                kubectl -n development get ing -o jsonpath='{.items[*].spec.rules[*].host}'
-                kubectl -n development get ing
-                curl -v solar-system-development.192.168.49.2.nip.io
+            # - name: Get all details in development namespace
+            #   run: |
+            #     kubectl -n development get ing -o jsonpath='{.items[*].spec.rules[*].host}'
+            #     kubectl -n development get ing
+            #     curl -v solar-system-development.192.168.49.2.nip.io
 
     integration-testing:
         name: Dev Integration Testing
