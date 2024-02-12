@@ -237,6 +237,9 @@ jobs:
               run: |
                 kubectl apply -f kubernetes/development
 
+            - name: Get all details in development namespace
+              run: kubectl -n development get all
+
               
 
             
