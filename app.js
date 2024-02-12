@@ -24,6 +24,7 @@ mongoose.connect(process.env.MONGO_URI, {
     }
 })
 
+
 var Schema = mongoose.Schema;
 
 var dataSchema = new Schema({
