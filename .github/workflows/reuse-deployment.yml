@@ -2,6 +2,9 @@ name: Deployment - Reusable Workflow
 
 on:
     workflow_call:
+        secrets:
+          mongodb-password:
+            required: true
 
 jobs:
     reuse-deploy:
@@ -75,7 +78,7 @@ jobs:
                 kubectl -n ${{ vars.NAMESPACE }} create secret generic mongo-db-creds \
                 --from-literal=MONGO_URI=${{ env.MONGO_URI }} \
                 --from-literal=MONGO_USERNAME=${{ vars.MONGO_USERNAME }} \
-                --from-literal=MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
+                --from-literal=MONGO_PASSWORD=${{ secrets.mongodb-password }} \
                 --save-config \
                 --dry-run=client \
                 -o yaml | kubectl apply -f -

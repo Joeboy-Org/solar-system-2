@@ -166,6 +166,8 @@ jobs:
         name: Deploy App to Dev
         needs: docker
         uses: ./.github/workflows/reuse-deployment.yml
+        secrets: 
+            mongodb-password: ${{ secrets.MONGO_PASSWORD }}
 
     dev-integration-testing:
         if: contains(github.ref, 'feature/')
@@ -191,6 +193,8 @@ jobs:
         name: Deploy App to Prod
         needs: docker
         uses: ./.github/workflows/reuse-deployment.yml
+        secrets: 
+            mongodb-password: ${{ secrets.MONGO_PASSWORD }}
         # environment: 
         #   name: production
         #   url: http://${{steps.set-ingress-host-address.outputs.APP_INGRESS_HOST}}
