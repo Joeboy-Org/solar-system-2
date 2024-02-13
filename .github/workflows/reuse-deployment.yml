@@ -15,7 +15,7 @@ on:
 
           k8s-manifest-dir:
             description: Directory containing kubernetes manifests files
-            default: kubernetes/
+            default: kubernetes
             required: true
             type: string
 
