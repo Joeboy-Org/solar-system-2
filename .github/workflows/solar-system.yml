@@ -264,7 +264,7 @@ jobs:
          uses: rtCamp/action-slack-notify@v2
          env:
           SLACK_CHANNEL: github-actions-channel
-          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff' 
           SLACK_ICON: https://github.com/ifeanyi23/solar-system/blob/main/images/saturn.png
           SLACK_MESSAGE: ':hammer_and_wrench Triggered by ${{github.actor}}'
           SLACK_TITLE: Informantion
