@@ -104,7 +104,42 @@ jobs:
                 name: Code-Coverage-Result
                 path: coverage
                 retention-days: 5
+    
+    reports-s3:
+        needs: [code-coverage, unit-testing]
+        name: AWS S3 - Upload Reports
+        runs-on: ubuntu-latest
+        continue-on-error: true
+        steps:
+            - name: Download Mocha Test Artifact
+              uses: actions/download-artifact@v3
+              with:
+                name: Mocha-Test-Results
 
+            - name: Download Code Coverage Artifact
+              uses: actions/download-artifact@v3
+              with:
+                name: Code-Coverage-Result
+
+            - name: Merge Test Files
+              run: |
+                ls -ltr
+                mkdir reports-${{github.sha}}
+                mv cobertura-coverage.xml reports-${{github.sha}}/
+                mv test-results.xml reports-${{github.sha}}/
+                ls -ltr reports-${{github.sha}}/
+
+            - name: Upload to AWS S3
+              uses: jakejarvis/s3-sync-action@master
+              with:
+                args: --follow-symlinks --delete
+              env:
+                AWS_S3_BUCKET: solar-system-reports-bucket-001
+                AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                AWS_REGION: 'ap-southeast-2'   # optional: defaults to us-east-1
+                SOURCE_DIR: 'reports-${{github.sha}}'      # optional: defaults to entire repository
+                DEST_DIR: 'reports-${{github.sha}}'
     docker:
           name: Containerization
           needs: [unit-testing, code-coverage]
@@ -209,6 +244,7 @@ jobs:
         if: github.ref == 'ref/heads/main'
         needs: prod-deploy
         runs-on: ubuntu-latest
+        continue-on-error: true
         steps:
             - name: Test URL Output CURL AND JQ
               env:
@@ -218,6 +254,22 @@ jobs:
                 echo "---------------------------------"
                 curl https://$URL/live -s -k | jq -r .status | grep -i live
 
+    slack-notification:
+      if: always()
+      name: Slack Notification
+      needs: [dev-integration-testing, prod-integration-testing]
+      continue-on-error: true
+      runs-on: ubuntu-latest
+      steps:
+       - name: Slack Notification
+         uses: rtCamp/action-slack-notify@v2
+         env:
+          SLACK_CHANNEL: github-actions-channel
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff' 
+          # SLACK_ICON: https://github.com/ifeanyi23/solar-system/blob/main/images/saturn.png
+          SLACK_MESSAGE: ':hammer_and_wrench: Triggered by ${{github.actor}}'
+          SLACK_TITLE: Information
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
               
 
             
