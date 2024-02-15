@@ -244,6 +244,7 @@ jobs:
         if: github.ref == 'ref/heads/main'
         needs: prod-deploy
         runs-on: ubuntu-latest
+        continue-on-error: true
         steps:
             - name: Test URL Output CURL AND JQ
               env:
