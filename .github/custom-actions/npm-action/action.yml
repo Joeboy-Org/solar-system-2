@@ -15,4 +15,4 @@ runs:
             
     - name: Install Dependencies
       run: npm install
-      bash: shell
+      shell: bash
