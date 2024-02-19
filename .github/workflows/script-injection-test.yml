@@ -17,7 +17,7 @@ jobs:
               env:
                 AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
               run: |
-               issues_title="${{ github.event.issues_title }}"
+               issues_title="${{ github.event.issue.title }}"
                if [["$issues_title" == *"bug"*]]; then
                   echo "Issue is about a bug!"
                   echo "Assigning Label - BUG ....... ....... .......... .."
