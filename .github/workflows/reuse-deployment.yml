@@ -24,6 +24,18 @@ on:
             default: dev
             required: true
             type: string
+
+          aws_region:
+            description: Provide Development Environment
+            default: ap-southeast-2
+            required: true
+            type: string
+
+          aws_role:
+            description: Provide Development Environment
+            required: true
+            type: string
+          
         outputs:
             application-url:
               value: ${{jobs.reuse-deploy.outputs.APP_INGRESS_URL}}
@@ -50,7 +62,12 @@ jobs:
             #   with:
             #     addons: metallb,ingress
         
-            
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                aws-region: ${{ inputs.aws_region }}
+                role-to-assume: ${{ inputs.aws_role }}
+
             - name: Install kubectl CLI
               uses: azure/setup-kubectl@v3
               with:
