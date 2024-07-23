@@ -44,7 +44,9 @@ on:
             required: true
           kubeconfig:
             required: true
-
+permissions:
+  id-token: write
+  contents: read
 jobs:
     reuse-deploy:
         environment: 
