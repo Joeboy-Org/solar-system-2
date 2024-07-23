@@ -200,8 +200,8 @@ jobs:
             mongodb-uri: ${{vars.MONGO_URI}}
             environment: development
             k8s-manifest-dir: kubernetes
-            aws_region: ${{ vars.AWS_DEFAULT_REGION }}
-            aws_role: ${{ vars.AWS_OIDC_ROLE }}
+            # aws_region: ${{ vars.AWS_DEFAULT_REGION }}
+            # aws_role: ${{ vars.AWS_OIDC_ROLE }}
 
     dev-integration-testing:
         if: contains(github.ref, 'feature/')
@@ -234,8 +234,8 @@ jobs:
             mongodb-uri: ${{vars.MONGO_URI}}
             environment: production
             k8s-manifest-dir: kubernetes
-            aws_region: ${{ vars.AWS_DEFAULT_REGION }}
-            aws_role: ${{ vars.AWS_OIDC_ROLE }}
+            # aws_region: ${{ vars.AWS_DEFAULT_REGION }}
+            # aws_role: ${{ vars.AWS_OIDC_ROLE }}
 
 
     prod-integration-testing:
