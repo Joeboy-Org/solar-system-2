@@ -81,7 +81,6 @@ jobs:
                method: kubeconfig
                kubeconfig: ${{secrets.kubeconfig}}
                
-
             # - name: Create Namespace
             #   run: kubectl create namespace development
             
