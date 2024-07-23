@@ -228,6 +228,7 @@ jobs:
         uses: ./.github/workflows/reuse-deployment.yml
         secrets: 
             mongodb-password: ${{ secrets.MONGO_PASSWORD }}
+            kubeconfig: ${{secrets.KUBECONFIG}}
         with:
             mongodb-uri: ${{vars.MONGO_URI}}
             environment: production
