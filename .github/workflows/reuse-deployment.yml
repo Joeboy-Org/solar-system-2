@@ -30,6 +30,8 @@ on:
         secrets:
           mongodb-password:
             required: true
+          kubeconfig:
+            required: true
 
 jobs:
     reuse-deploy:
@@ -58,7 +60,7 @@ jobs:
               uses: azure/k8s-set-context@v3
               with:
                method: kubeconfig
-               kubeconfig: ${{secrets.KUBECONFIG}}
+               kubeconfig: ${{secrets.kubeconfig}}
 
             # - name: Create Namespace
             #   run: kubectl create namespace development
