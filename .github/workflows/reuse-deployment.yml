@@ -26,13 +26,13 @@ on:
             type: string
 
           aws_region:
-            description: Provide Development Environment
+            description: AWS Region
             default: ap-southeast-2
             required: true
             type: string
 
           aws_role:
-            description: Provide Development Environment
+            description: This is the AWS role
             required: true
             type: string
           
